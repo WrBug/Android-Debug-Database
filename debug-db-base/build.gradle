@@ -18,6 +18,7 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -44,5 +45,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
-
+publish {
+    userOrg = 'wrbug'
+    groupId = 'com.wrbug.datafinder'
+    artifactId = 'debug-db-base'
+    publishVersion = lib_version
+    desc = ''
+    website = 'https://github.com/wrbug/datafinder'
+}
 //apply from: 'debug-db-base-upload.gradle'

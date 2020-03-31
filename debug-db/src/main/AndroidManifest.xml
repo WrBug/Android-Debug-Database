@@ -2,11 +2,7 @@
     package="com.amitshekhar.debug">
 
     <application>
-        <provider
-            android:name=".DebugDBInitProvider"
-            android:authorities="${applicationId}.DebugDBInitProvider"
-            android:enabled="true"
-            android:exported="false" />
+
     </application>
 
 </manifest>
