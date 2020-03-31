@@ -38,7 +38,6 @@ import java.util.HashMap;
 public class DebugDB {
 
     private static final String TAG = DebugDB.class.getSimpleName();
-    private static final int DEFAULT_PORT = 8080;
     private static ClientServer clientServer;
     private static String addressLog = "not available";
 
@@ -46,20 +45,10 @@ public class DebugDB {
         // This class in not publicly instantiable
     }
 
-    public static void initialize(Context context, DBFactory dbFactory) {
-        int portNumber;
-
-        try {
-            portNumber = Integer.valueOf(context.getString(R.string.PORT_NUMBER));
-        } catch (NumberFormatException ex) {
-            Log.e(TAG, "PORT_NUMBER should be integer", ex);
-            portNumber = DEFAULT_PORT;
-            Log.i(TAG, "Using Default port : " + DEFAULT_PORT);
-        }
-
-        clientServer = new ClientServer(context, portNumber, dbFactory);
+    public static void initialize(Context context, DBFactory dbFactory,int port) {
+        clientServer = new ClientServer(context, port, dbFactory);
         clientServer.start();
-        addressLog = NetworkUtils.getAddressLog(context, portNumber);
+        addressLog = NetworkUtils.getAddressLog(context, port);
         Log.d(TAG, addressLog);
     }
 

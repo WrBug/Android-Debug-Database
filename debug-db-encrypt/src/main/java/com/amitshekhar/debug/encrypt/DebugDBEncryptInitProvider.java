@@ -18,7 +18,6 @@ public class DebugDBEncryptInitProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        DebugDB.initialize(getContext(), new DebugDBEncryptFactory());
         return true;
     }
 
