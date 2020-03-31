@@ -77,11 +77,13 @@ function deleteDb() {
 function getDBList() {
 
    $.ajax({url: "getDbList", success: function(result){
-
            result = JSON.parse(result);
            var dbList = result.rows;
            $('#db-list').empty();
            var isSelectionDone = false;
+           var queryDb=getHashValue("db");
+           var dbNames=dbList.map(function(e){ return e[0]})
+           var contains=dbNames.includes(queryDb)
            for(var count = 0; count < dbList.length; count++){
              var dbName = dbList[count][0];
              var isEncrypted = dbList[count][1];
@@ -89,7 +91,10 @@ function getDBList() {
              var dbAttribute = isEncrypted == "true" ? ' <span class="glyphicon glyphicon-lock" aria-hidden="true" style="color:blue"></span>' : "";
              if(dbName.indexOf("journal") == -1 && dbName.indexOf("-wal") == -1 && dbName.indexOf("-shm") == -1){
                 $("#db-list").append("<a href='#' id=" + dbName + " class='list-group-item' onClick='openDatabaseAndGetTableList(\""+ dbName + "\", \""+ isDownloadable + "\");'>" + dbName + dbAttribute + "</a>");
-                if(!isSelectionDone){
+                if((!isSelectionDone)){
+                    if(contains&&(dbName.toLowerCase()!=queryDb.toLowerCase())){
+                        continue;
+                    }
                     isSelectionDone = true;
                     $('#db-list').find('a').trigger('click');
                 }
