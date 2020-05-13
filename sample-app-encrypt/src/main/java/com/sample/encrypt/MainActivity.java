@@ -27,6 +27,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.amitshekhar.DebugDB;
+import com.amitshekhar.sqlite.DBFactory;
 import com.sample.encrypt.database.CarDBHelper;
 import com.sample.encrypt.database.ContactDBHelper;
 import com.sample.encrypt.database.ExtTestDBHelper;
@@ -47,7 +49,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        try {
+            DebugDB.initialize(
+                    this,
+                    (DBFactory) Class.forName("com.amitshekhar.debug.encrypt.sqlite.DebugDBEncryptFactory").newInstance(),
+                    23456
+            );
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         setContentView(R.layout.activity_main);
 
         Set<String> stringSet = new HashSet<>();

@@ -30,6 +30,11 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue("string", "PORT_NUMBER", "8080")
     }
+    sourceSets {
+        main {
+            assets.srcDirs = ["$rootDir/web-assets"]
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -41,6 +46,23 @@ android {
     }
 }
 
+android.libraryVariants.all { variant ->
+    def taskName = variant.name
+    tasks.all {
+        it.doFirst {
+            println "libraryVariants tasks：" + it.name
+        }
+        if ("generate${taskName.capitalize()}Assets".equalsIgnoreCase(it.name)) {
+            it.doFirst {
+                println "debug-database-web"
+                exec {
+                    workingDir rootDir
+                    commandLine 'sh', './copy-debug-database-web.sh'
+                }
+            }
+        }
+    }
+}
 dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'android.arch.persistence.room:runtime:1.1.1'

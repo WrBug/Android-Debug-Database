@@ -62,7 +62,7 @@ public class Utils {
         InputStream input = null;
         try {
             ByteArrayOutputStream output = new ByteArrayOutputStream();
-            input = assetManager.open(fileName);
+            input = assetManager.open("debug-database-web/" + fileName);
             byte[] buffer = new byte[1024];
             int size;
             while (-1 != (size = input.read(buffer))) {
