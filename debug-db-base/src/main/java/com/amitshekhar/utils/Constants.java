@@ -33,5 +33,5 @@ public final class Constants {
     public static final String PK = "pk";
     public static final String NAME = "name";
     public static final String NULL = "null";
-
+    public static final String WEB_DIR = "datafinder-web/debug-database";
 }

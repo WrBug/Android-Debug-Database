@@ -130,7 +130,7 @@ public class RequestHandler {
             } else if (route.startsWith("downloadDb")) {
                 bytes = Utils.getDatabase(mSelectedDatabase, mDatabaseFiles);
             } else {
-                bytes = Utils.loadContent(route, mAssets);
+                bytes = Utils.loadContent(route, mContext);
             }
 
             if (null == bytes) {

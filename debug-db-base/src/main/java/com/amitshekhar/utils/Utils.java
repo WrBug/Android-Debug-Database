@@ -19,6 +19,7 @@
 
 package com.amitshekhar.utils;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -58,28 +60,12 @@ public class Utils {
         }
     }
 
-    public static byte[] loadContent(String fileName, AssetManager assetManager) throws IOException {
-        InputStream input = null;
+    public static byte[] loadContent(String fileName, Context context) throws IOException {
         try {
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            input = assetManager.open("debug-database-web/" + fileName);
-            byte[] buffer = new byte[1024];
-            int size;
-            while (-1 != (size = input.read(buffer))) {
-                output.write(buffer, 0, size);
-            }
-            output.flush();
-            return output.toByteArray();
-        } catch (FileNotFoundException e) {
+            File file = new File(context.getCacheDir(), Constants.WEB_DIR +"/"+ fileName);
+            return FileUtils.readBytes(file);
+        } catch (Throwable e) {
             return null;
-        } finally {
-            try {
-                if (null != input) {
-                    input.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 

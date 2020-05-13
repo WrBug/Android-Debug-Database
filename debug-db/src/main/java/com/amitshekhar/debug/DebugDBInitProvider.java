@@ -41,7 +41,7 @@ public class DebugDBInitProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        DebugDB.initialize(getContext(), new DebugDBFactory(),8080);
+//        DebugDB.initialize(getContext(), new DebugDBFactory(),8080);
         return true;
     }
 

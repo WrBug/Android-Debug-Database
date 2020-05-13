@@ -29,6 +29,7 @@ import android.view.View;
 
 import com.amitshekhar.DebugDB;
 import com.amitshekhar.sqlite.DBFactory;
+import com.amitshekhar.utils.FileUtils;
 import com.sample.encrypt.database.CarDBHelper;
 import com.sample.encrypt.database.ContactDBHelper;
 import com.sample.encrypt.database.ExtTestDBHelper;
@@ -37,10 +38,13 @@ import com.sample.encrypt.database.room.User;
 import com.sample.encrypt.database.room.UserDBHelper;
 import com.sample.encrypt.utils.Utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.amitshekhar.utils.Constants.WEB_DIR;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,11 +54,12 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         try {
+            FileUtils.assetsToFile(WEB_DIR, new File(getCacheDir(), WEB_DIR));
             DebugDB.initialize(
-                    this,
-                    (DBFactory) Class.forName("com.amitshekhar.debug.encrypt.sqlite.DebugDBEncryptFactory").newInstance(),
-                    23456
+                    this
             );
+            DebugDB.start((DBFactory) Class.forName("com.amitshekhar.debug.encrypt.sqlite.DebugDBEncryptFactory").newInstance(),
+                    23456);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {

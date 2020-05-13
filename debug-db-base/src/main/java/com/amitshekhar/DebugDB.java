@@ -40,18 +40,21 @@ public class DebugDB {
     private static final String TAG = DebugDB.class.getSimpleName();
     private static ClientServer clientServer;
     private static String addressLog = "not available";
+    public static Context context;
 
     private DebugDB() {
         // This class in not publicly instantiable
     }
 
-    public static void initialize(Context context, DBFactory dbFactory,int port) {
+    public static void initialize(Context ctx) {
+        context=ctx;
+    }
+    public static void start(DBFactory dbFactory, int port) {
         clientServer = new ClientServer(context, port, dbFactory);
         clientServer.start();
         addressLog = NetworkUtils.getAddressLog(context, port);
         Log.d(TAG, addressLog);
     }
-
     public static String getAddressLog() {
         Log.d(TAG, addressLog);
         return addressLog;
